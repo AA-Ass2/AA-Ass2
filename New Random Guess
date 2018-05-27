@@ -1,0 +1,159 @@
+import java.io.*;
+import java.util.*;
+
+
+/**
+ * Random guessing player.
+ * This player is for task B.
+ *
+ * You may implement/extend other interfaces or classes, but ensure ultimately
+ * that this class implements the Player interface (directly or indirectly).
+ */
+public class RandomGuessPlayer implements Player
+{
+
+	 Map<String,String> attrvalue = new HashMap<>();
+     Map<String,String> persvalue = new HashMap<>();
+    /**
+     * Loads the game configuration from gameFilename, and also store the chosen
+     * person.
+     *
+     * @param gameFilename Filename of game configuration.
+     * @param chosenName Name of the chosen person for this player.
+     * @throws IOException If there are IO issues with loading of gameFilename.
+     *    Note you can handle IOException within the constructor and remove
+     *    the "throws IOException" method specification, but make sure your
+     *    implementation exits gracefully if an IOException is thrown.
+     */
+    public RandomGuessPlayer(String gameFilename, String chosenName)
+        throws IOException
+    {
+        
+        /*  here you have to read data from config file and load in to data structures
+        
+            for ex - */
+        
+            String assignedFilename = null;
+			BufferedReader assignedReader = new BufferedReader(new FileReader(assignedFilename));
+            String line;
+            String attribute = null;
+            String values = null;
+            while ((line = assignedReader.readLine()) != null) {
+        
+                String[] fields = line.split(" ");
+                if (fields.length != 2) {
+                        throw new IOException(assignedFilename + ": Misformed field line: " + line);
+                }
+                attribute = fields[0];
+                values = fields[1];
+            }
+            
+           
+            
+            Guess guess = new Guess(null, values, values);
+            
+            attrvalue.put(guess.getAttribute(), guess.getValue());
+            persvalue.put(guess.getType().toString(),guess.getValue());
+           /********* use hashmaps and ArrayList s to load data-- you  need to laod attribute values 
+            to a hashmap and personattribute values to another hash map*****
+        
+        */
+        
+        
+        
+        
+    } // end of RandomGuessPlayer()
+
+
+    public Guess guess() {
+
+        
+        /*
+        
+         here you have to randomly select a attribute  and a value from loaded hashmap data 
+         
+        use random command to select randomly..  but make sure atleast you get rid of atleast one person from the
+        
+        person list .
+        
+        
+        return that person as the guess you are making (see the return value of this function to 
+        build your return value.
+      
+        
+        
+        */
+    	Integer []attr = attrvalue.keySet().toArray(new Integer[0]);
+    	Integer []person = persvalue.keySet().toArray(new Integer[0]);
+    	
+    	Random random = new Random();
+    	Integer randomAttr = attr[random.nextInt(attr.length)];
+    	String randomAttrvalue = attrvalue.get(randomAttr);   	
+    	
+        
+        
+        // placeholder, replace
+        return new Guess(Guess.GuessType.Person, "", "Placeholder");
+    } // end of guess()
+
+
+    public boolean answer(Guess currGuess) {
+
+        /* 
+        
+        here you analyse the other players answer and return true if thats the right person the 
+        
+        opponent guessed. otherwise if that guess is wrong return false as the return value
+        
+        
+        */
+    	Set <String> guessattr = attrvalue.keySet();
+    	Set <String> guessperson = persvalue.keySet();
+    	Iterator attr = guessattr.iterator();
+    	Iterator person = guessperson.iterator();
+    	while(attr.hasNext()){
+    		String str = (String)attr.next();
+    		String value = (String) attrvalue.get(str);
+    		if( currGuess.getValue() == value)
+    			return true;
+    		else
+    			continue;
+    	}
+    	while (person.hasNext()){
+    		String str = (String)person.next();
+    		String value = (String) persvalue.get(str);
+    		if (currGuess.getValue() == value)
+    			return true;
+    		else
+    			continue;
+    	}
+    	
+                
+         // placeholder, replace
+        return false;
+    } // end of answer()
+
+
+	public boolean receiveAnswer(Guess currGuess, boolean answer) {
+
+            
+            /* 
+             here you have to pass the guess you made randomly as a parameter and 
+            
+            your answer to opponents guess (true/ false) to the opponent
+            
+            this part is easy..you only need to pass the made guess and answer
+            
+            */
+		System.out.println("Your answer was" + answer);
+		/*
+		 I don't know how to load want I randomly created in the Guess(), which is String randomAttrvalue = attrvalue.get(randomAttr);
+		 So I have no idea how to pass the game in this function...Could you please tell me how to load it?
+		 */
+        // placeholder, replace
+        return true;
+    } // end of receiveAnswer()
+	
+	
+
+} // end of class RandomGuessPlayer
